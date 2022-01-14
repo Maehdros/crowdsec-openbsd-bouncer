@@ -23,5 +23,5 @@ $response = curl_exec($ch);
 $arr = json_decode($response);
 foreach ($arr as $obj){
    $cmd = "/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add {$obj->value}";
-   echo $cmd.PHP_EOL;
+   exec($cmd,$output,$retval);
 }
