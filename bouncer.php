@@ -21,7 +21,11 @@ curl_setopt($ch,CURLOPT_SSL_VERIFYSTATUS,false);
 curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
 $response = curl_exec($ch);
 $arr = json_decode($response);
+$ipTxt="";
 foreach ($arr as $obj){
-   $cmd = "/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add $obj->value";
-   exec($cmd,$output,$retval);
+   //$cmd = "/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add $obj->value";
+   //exec($cmd,$output,$retval);
+   $ipTxt.=$obj->value.PHP_EOL;
 }
+file_put_contents("/tmp/ip.txt",$ipTxt);
+exec("pfctl -t crowdsec -T add -f /tmp/ip.txt");
