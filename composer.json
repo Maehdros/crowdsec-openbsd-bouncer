@@ -11,6 +11,7 @@
   ],
   "require": {
 	"ext-json": "*",
-	"vlucas/phpdotenv": ">=v5.4.1"
+	"vlucas/phpdotenv": ">=v5.4.1",
+	"ext-curl": "*"
   }
 }

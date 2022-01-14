@@ -22,6 +22,6 @@ curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
 $response = curl_exec($ch);
 $arr = json_decode($response);
 foreach ($arr as $obj){
-   $cmd = "/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add {$obj->value}";
+   $cmd = "/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add $obj->value";
    exec($cmd,$output,$retval);
 }
