@@ -1,0 +1,16 @@
+{
+  "name": "vendor_name/crowdsec-openbsd-bouncer",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+	{
+	  "name": "Bruno Mairlot",
+	  "email": "bruno@maehdros.com"
+	}
+  ],
+  "require": {
+	"ext-json": "*",
+	"vlucas/phpdotenv": ">=v5.4.1"
+  }
+}
