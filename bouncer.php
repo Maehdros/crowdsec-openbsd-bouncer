@@ -37,18 +37,22 @@ $response = curl_exec($ch);
 $arr = json_decode($response);
 
 $ipTxt="";
-foreach ($arr->deleted as $obj){
-   //$cmd = "/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add $obj->value";
-   //exec($cmd,$output,$retval);
-   $ipTxt.=$obj->value.PHP_EOL;
+if(isset($arr->deleted)) {
+   foreach ($arr->deleted as $obj) {
+      //$cmd = "/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add $obj->value";
+      //exec($cmd,$output,$retval);
+      $ipTxt .= $obj->value . PHP_EOL;
+   }
+   file_put_contents("/tmp/ip.txt", $ipTxt);
+   exec("pfctl -t crowdsec -T delete -f /tmp/ip.txt");
 }
-file_put_contents("/tmp/ip.txt",$ipTxt);
-exec("pfctl -t crowdsec -T delete -f /tmp/ip.txt");
-$ipTxt="";
-foreach ($arr->new as $obj){
-   //$cmd = "/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add $obj->value";
-   //exec($cmd,$output,$retval);
-   $ipTxt.=$obj->value.PHP_EOL;
+if(isset($arr->new)) {
+   $ipTxt = "";
+   foreach ($arr->new as $obj) {
+      //$cmd = "/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add $obj->value";
+      //exec($cmd,$output,$retval);
+      $ipTxt .= $obj->value . PHP_EOL;
+   }
+   file_put_contents("/tmp/ip.txt", $ipTxt);
+   exec("pfctl -t crowdsec -T add -f /tmp/ip.txt");
 }
-file_put_contents("/tmp/ip.txt",$ipTxt);
-exec("pfctl -t crowdsec -T add -f /tmp/ip.txt");
