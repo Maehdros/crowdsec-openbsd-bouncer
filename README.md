@@ -21,11 +21,20 @@ pkg_add php-8.0.3 php-curl-8.0.3 php-zip-8.0.3
 
 The specific version may vary to suit the current version
 
-## Setup
+## Setup PF
 
 Create a table named crowdsec and link it to a local persistent file (empty) :
 
 table <crowdsec> persist file "/etc/pf.conf.d/crowdsec.txt"
+
+## Setup for the script
+
+You will need to run composer install to get the dependencies (not much) 
+
+```
+composer install
+```
+
 
 Create a .env file in the directory of the bouncer and add the following variables :
 
