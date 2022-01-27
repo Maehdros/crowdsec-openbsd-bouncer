@@ -36,6 +36,7 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
 curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
 curl_setopt($ch,CURLOPT_SSL_VERIFYSTATUS,false);
 curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
+curl_setopt($ch, CURLOPT_USERAGENT, "PHP CURL");
 $response = curl_exec($ch);
 $arr = json_decode($response);
 
