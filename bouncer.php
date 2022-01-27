@@ -43,7 +43,9 @@ curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
 curl_setopt($ch, CURLOPT_USERAGENT, "crowdsec-openbsd-bouncer/0.0.1");
 $response = curl_exec($ch);
 $arr = json_decode($response);
-
+if($debug){
+   print_r($arr);
+}
 $ipTxt="";
 if(isset($arr->deleted)) {
    foreach ($arr->deleted as $obj) {
