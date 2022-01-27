@@ -3,7 +3,7 @@ if(!file_exists(".env")){
    die("Missing .env file. Please create it and add APIKEY=.......");
 }
 require "vendor/autoload.php";
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__FILE__));
 $dotenv->load();
 
 $options = getopt("",["startup"]);
