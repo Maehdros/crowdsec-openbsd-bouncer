@@ -1,9 +1,9 @@
 <?php
 
 require "vendor/autoload.php";
-echo dirname(__FILE__);
-die();
-if(!file_exists(".env")){
+
+$envdir = dirname(__FILE__);
+if(!file_exists("$envdir/.env")){
    die("Missing .env file. Please create it and add APIKEY=.......");
 }
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__FILE__));
