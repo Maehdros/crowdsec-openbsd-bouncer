@@ -1,10 +1,11 @@
 <?php
-if(!file_exists(".env")){
-   die("Missing .env file. Please create it and add APIKEY=.......");
-}
+
 require "vendor/autoload.php";
 echo dirname(__FILE__);
 die();
+if(!file_exists(".env")){
+   die("Missing .env file. Please create it and add APIKEY=.......");
+}
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__FILE__));
 $dotenv->load();
 
