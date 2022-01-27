@@ -9,7 +9,7 @@ if(!file_exists("$envdir/.env")){
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__FILE__));
 $dotenv->load();
 
-$options = getopt("",["startup"]);
+$options = getopt("",["startup","debug"]);
 
 if(!isset($_ENV["APIKEY"])){
    die("Missing APIKEY in .env file");
@@ -24,6 +24,10 @@ if(!isset($_ENV["PFTABLE"])){
 $startup="false";
 if(isset($options["startup"])){
    $startup="true";
+}
+$debug=false;
+if(isset($options["debug"])){
+   $debug="true";
 }
 
 $ch = curl_init($_ENV["LAPIURL"]."/v1/decisions/stream?startup=$startup");
@@ -43,20 +47,16 @@ $arr = json_decode($response);
 $ipTxt="";
 if(isset($arr->deleted)) {
    foreach ($arr->deleted as $obj) {
-      //$cmd = "/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add $obj->value";
-      //exec($cmd,$output,$retval);
       $ipTxt .= $obj->value . PHP_EOL;
    }
    file_put_contents("/tmp/ip.txt", $ipTxt);
-   exec("pfctl -t crowdsec -T delete -f /tmp/ip.txt");
+   exec("/sbin/pfctl -t {$_ENV["PFTABLE"]} -T delete -f /tmp/ip.txt");
 }
 if(isset($arr->new)) {
    $ipTxt = "";
    foreach ($arr->new as $obj) {
-      //$cmd = "/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add $obj->value";
-      //exec($cmd,$output,$retval);
       $ipTxt .= $obj->value . PHP_EOL;
    }
    file_put_contents("/tmp/ip.txt", $ipTxt);
-   exec("pfctl -t crowdsec -T add -f /tmp/ip.txt");
+   exec("/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add -f /tmp/ip.txt");
 }
