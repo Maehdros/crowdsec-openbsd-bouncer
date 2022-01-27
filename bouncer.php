@@ -47,21 +47,24 @@ if($debug){
    print_r($arr);
 }
 $ipTxt="";
+$tmpdir = sys_get_temp_dir();
+$tmpfile = "$tmpdir/crowdsec-openbsd-bouncer.txt";
+
 if(isset($arr->deleted)) {
    foreach ($arr->deleted as $obj) {
       $ipTxt .= $obj->value . PHP_EOL;
    }
-   file_put_contents("/tmp/ip.txt", $ipTxt);
-   exec("/sbin/pfctl -t {$_ENV["PFTABLE"]} -T delete -f /tmp/ip.txt");
+   file_put_contents($tmpfile, $ipTxt);
+   exec("/sbin/pfctl -t {$_ENV["PFTABLE"]} -T delete -f $tmpfile");
 }
 if(isset($arr->new)) {
    $ipTxt = "";
    foreach ($arr->new as $obj) {
       $ipTxt .= $obj->value . PHP_EOL;
    }
-   file_put_contents("/tmp/ip.txt", $ipTxt);
-   exec("/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add -f /tmp/ip.txt");
+   file_put_contents($tmpfile, $ipTxt);
+   exec("/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add -f $tmpfile");
 }
-if(file_exists("/tmp/ip.txt")){
-   unlink("/tmp/ip.txt");
+if(file_exists($tmpfile)){
+   unlink($tmpfile);
 }
