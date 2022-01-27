@@ -53,7 +53,6 @@ if(isset($arr->deleted)) {
    }
    file_put_contents("/tmp/ip.txt", $ipTxt);
    exec("/sbin/pfctl -t {$_ENV["PFTABLE"]} -T delete -f /tmp/ip.txt");
-
 }
 if(isset($arr->new)) {
    $ipTxt = "";
@@ -63,4 +62,6 @@ if(isset($arr->new)) {
    file_put_contents("/tmp/ip.txt", $ipTxt);
    exec("/sbin/pfctl -t {$_ENV["PFTABLE"]} -T add -f /tmp/ip.txt");
 }
-unlink("/tmp/ip.txt");
+if(file_exists("/tmp/ip.txt")){
+   unlink("/tmp/ip.txt");
+}
