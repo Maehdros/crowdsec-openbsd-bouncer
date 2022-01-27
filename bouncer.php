@@ -27,7 +27,7 @@ if(isset($options["startup"])){
 }
 $debug=false;
 if(isset($options["debug"])){
-   $debug="true";
+   $debug=true;
 }
 
 $ch = curl_init($_ENV["LAPIURL"]."/v1/decisions/stream?startup=$startup");

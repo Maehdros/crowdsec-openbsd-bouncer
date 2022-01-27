@@ -1,5 +1,5 @@
 {
-  "name": "vendor_name/crowdsec-openbsd-bouncer",
+  "name": "maehdros/crowdsec-openbsd-bouncer",
   "description": "description",
   "minimum-stability": "stable",
   "license": "GPL-2.0-or-later",
